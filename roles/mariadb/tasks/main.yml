@@ -1,0 +1,28 @@
+---
+  - name: Install MariaDB
+    yum:
+      name: "{{ item }}"
+      state: latest
+    loop:
+      - mariadb-server
+      - python3-pip
+      - MySQL-python
+
+  - name: Start service MariaDB
+    service:
+      name: mariadb
+      state: started
+      enabled: yes
+
+  - name: Create database
+    mysql_db:
+      name: "{{ db }}"
+      state: present
+
+  - name: Create user database
+    mysql_user:
+      name: "{{ db_user }}"
+      password: "{{ db_user_pass }}"
+      priv:
+        '{{ db }}.*:ALL,GRANT'
+      state: present

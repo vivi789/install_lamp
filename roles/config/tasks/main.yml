@@ -1,0 +1,18 @@
+---
+  - name: Download source code
+    get_url:
+      url: https://wordpress.org/latest.zip
+      dest: /tmp/latest.zip
+  - name: Extract file
+    unarchive:
+      src: /tmp/latest.zip
+      dest: /tmp
+      remote_src: yes
+  - name: Copy source code to folder source code
+    shell: rsync -avF /tmp/wordpress/ "{{ path_source }}"
+  - name: Change owner
+    file:
+      path: "{{ path_source }}"
+      owner: apache
+      group: apache
+      recurse: yes

@@ -1,0 +1,19 @@
+---
+  - name: Install Remi Repository
+    yum:
+      name: https://rpms.remirepo.net/enterprise/remi-release-7.rpm
+      state: present
+
+  - name: Install PHP 8
+    yum:
+      enablerepo: "remi,remi-php80"
+      name:
+        - php
+        - php-common
+        - php-cli
+        - php-gd
+        - php-curl
+        - php-mysqlnd
+        - php-fpm
+        - php-mysqli
+      state: latest
